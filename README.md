@@ -22,17 +22,9 @@ pip install -r requirements.txt
 To download this project to your local machine, follow these steps:
 
 ### Option 1: Download the ZIP File
-1. Go to the [GitHub repository](<https://github.com/ptorpis/val_model>).
-2. Click on the **Code** button.
+1. Go to the [Releases](<https://github.com/ptorpis/val_model/releases>).
 3. Select **Download ZIP**.
 4. Extract the ZIP file to your desired location.
-
-### Option 2: Clone via Git (Alternative Method)
-If you have Git installed, you can clone the repository using:
-
-```bash
-git clone https://github.com/ptorpis/val_model
-```
 
 Then, navigate into the project directory:
 
