@@ -1,7 +1,7 @@
 # Financial Statements Exporter
 
 ## Overview
-This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting over the last 5 years.
+This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting over the last 5 years. This is a refactored verion of my [financial_analysis](<https://github.com/ptorpis/financial_analysis>) project
 
 Please make sure to verify the validity and the accuracy of the data provided.
 
@@ -31,13 +31,13 @@ To download this project to your local machine, follow these steps:
 If you have Git installed, you can clone the repository using:
 
 ```bash
-git clone <https://github.com/ptorpis/val_model>
+git clone https://github.com/ptorpis/val_model
 ```
 
 Then, navigate into the project directory:
 
 ```bash
-cd <repository_folder>
+cd your/repository_folder
 ```
 
 ## Configuration
