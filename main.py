@@ -37,6 +37,10 @@ def get_statements(symbol):
         print(e)
         return
 
+    if api_key == 'INSERT YOUR KEY HERE':
+        print("Please provide an API key. (config/config.json)")
+        return
+
     for sheet in sheets:
         url = f'https://www.alphavantage.co/query?function={sheet}&symbol={symbol}&apikey={api_key}'
         response = requests.get(url)
@@ -46,7 +50,7 @@ def get_statements(symbol):
         if "Information" in data:
             print(f"API Limit Reached: {data['Information']}")
             return -1 # Stop execution if rate limit is reached
-
+        
         # Ensure output directory exists
         os.makedirs(DATA_PATH, exist_ok=True)
 
@@ -56,7 +60,8 @@ def get_statements(symbol):
             json.dump(data, f, indent=4)
 
         print(f"Saved: {file_path}")  # Logging success
-        return 0
+        
+    return 0
 
 
 def get_info(ticker_symbol):
