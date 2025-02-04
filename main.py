@@ -10,6 +10,7 @@ import argparse
 
 CONFIG_PATH = 'config/config.json'
 DATA_PATH = 'data'
+YEARS = 5
 
 sheets = [
     'BALANCE_SHEET',
@@ -96,7 +97,8 @@ def process_statement(data_path):
 
 
     periods = []
-    for i in range(20):
+    num_of_periods = YEARS * 4
+    for i in range(num_of_periods):
         periods.append(quarterly[i]["fiscalDateEnding"])
 
     if quarterly:
@@ -119,6 +121,9 @@ def process_statement(data_path):
         statement[quarterly[period][keys_list[0]]] = values
 
     df = pd.DataFrame(statement)
+    df = df.set_index("Keys")
+    df = df.iloc[:, ::-1]
+
     return df
 
 
@@ -146,13 +151,13 @@ def export(data_path, symbol):
         # Write the cover sheet first
         cover_df.to_excel(writer, sheet_name="Cover Sheet", index=False)
         
-        balance_sheet.iloc[:, 1:] = balance_sheet.iloc[:, 1:].apply(pd.to_numeric)
-        income_statement.iloc[:, 1:] = income_statement.iloc[:, 1:].apply(pd.to_numeric)
-        cash_flow.iloc[:, 1:] = cash_flow.iloc[:, 1:].apply(pd.to_numeric)
+        balance_sheet = balance_sheet.apply(pd.to_numeric)
+        income_statement = income_statement.apply(pd.to_numeric)
+        cash_flow = cash_flow.apply(pd.to_numeric)
 
-        balance_sheet.to_excel(writer, sheet_name='Balance Sheet', index=False)
-        income_statement.to_excel(writer, sheet_name='Income Statement', index=False)
-        cash_flow.to_excel(writer, sheet_name='Cash Flow', index=False)
+        balance_sheet.to_excel(writer, sheet_name='Balance Sheet')
+        income_statement.to_excel(writer, sheet_name='Income Statement')
+        cash_flow.to_excel(writer, sheet_name='Cash Flow')
         
         workbook = writer.book
         
@@ -199,10 +204,12 @@ def validate_ticker(symbol):
     
 
 def main(data_path, symbol):
+    print(f"Retrieving statements for {symbol}.")
     gs = get_statements(symbol)
     if gs != 0:
         return
     export(data_path, symbol)
+    print(f"Excel file saved! Location: output/{symbol}_statements.xlsx")
 
 
 if __name__ == "__main__":
