@@ -1,7 +1,7 @@
 # Financial Statements Exporter
 
 ## Overview
-This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting over the last 5 years. This is a refactored verion of my [financial_analysis](<https://github.com/ptorpis/financial_analysis>) project
+This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting over the last 5 years. This is a refactored verion of my [financial_analysis](<https://github.com/ptorpis/financial_analysis>) project.
 
 Please make sure to verify the validity and the accuracy of the data provided.
 
@@ -45,9 +45,27 @@ To use this script, you must obtain an API key from [Alpha Vantage](https://www.
 Run the script with a stock ticker symbol:
 
 ```bash
-python script.py AAPL
+python main.py AAPL
 ```
 *Note: the program accepts both lower and upper case entries as the ticker, it runs a check to verify that the string provided is a ticker, but this check may not be 100% accurate, if you encounter issues with the program not accepting your ticker, feel free to reach out.*
+
+### Optional Arguments
+- **Specify Number of Years**: You can choose how many years of financial data to export (default is 5, max is 15).
+  ```bash
+  python main.py AAPL 10
+  ```
+This will export the quarterly statements for the last 10 years.
+
+- **Skip Fetching New Data**: If you have already downloaded the data and just want to adjust the number of years in the Excel file, use the `--no-fetch` flag to avoid unnecessary API calls.
+  ```bash
+  python main.py AAPL 7 --no-fetch
+  ```
+This will export the quarterly statements for the last 7 years, and skip the API calls. (A free user has a maximum of 25 per day)
+
+- **If you need help, use -h or --help**:
+  ```bash
+  python main.py --help
+  ```
 
 ### Example Output Structure
 An Excel file will be created in the `output/` directory, containing:
@@ -56,18 +74,10 @@ An Excel file will be created in the `output/` directory, containing:
 - **Income Statement**
 - **Cash Flow Statement**
 
-## Code Breakdown
-- `get_api_key(config_path)`: Retrieves API key from the config file.
-- `get_statements(symbol)`: Fetches financial statements from Alpha Vantage.
-- `get_info(ticker_symbol)`: Retrieves company info from Yahoo Finance.
-- `process_statement(data_path)`: Parses JSON financial data into a DataFrame.
-- `export(data_path, symbol)`: Formats and exports data to an Excel file.
-- `validate_ticker(symbol)`: Checks if the ticker is valid using Yahoo Finance.
-- `main(data_path, symbol)`: Coordinates the execution flow.
-
 ## Error Handling
 - Checks for API key presence and validity.
 - Detects and handles API rate limits.
+- Checks for exising files when using `--no-fetch`.
 - Ensures valid and existing stock tickers.
 - Handles missing or malformed data.
 

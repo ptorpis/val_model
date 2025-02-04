@@ -30,8 +30,21 @@ def get_api_key(config_path):
     except (FileNotFoundError, json.JSONDecodeError) as e:
         raise RuntimeError(f"Error reading API key: {e}")
 
-def get_statements(symbol):
+def get_statements(symbol, no_fetch):
     """Fetches financial statements for a given stock symbol and saves them as JSON files."""
+    
+    if no_fetch == True:
+        count = 0
+        for i in range(len(sheets)):
+            if os.path.exists(f'{DATA_PATH}/{symbol}_{sheets[i]}.json'):
+                count += 1
+
+        if count == len(sheets):
+            print("Skipped fetching statements, files found, exporting...")
+            return 0
+        else:
+            raise FileNotFoundError(f"Could not find JSON files.")
+    
     try:
         api_key = get_api_key(CONFIG_PATH)
     except RuntimeError as e:
@@ -214,9 +227,9 @@ def validate_years(value):
 
 
 
-def main(data_path, symbol, years):
+def main(data_path, symbol, years, no_fetch):
     print(f"Retrieving statements for {symbol} for the last {years} year(s).")
-    gs = get_statements(symbol)
+    gs = get_statements(symbol, no_fetch)
     if gs != 0:
         return
 
@@ -241,5 +254,14 @@ if __name__ == "__main__":
         help="Optional argument, the number of years to export statements for (1 - 15). Default value is 5."
     )
 
+    parser.add_argument(
+        '--no-fetch',
+        action='store_true',
+        help=
+            """Skip fetching the data from the API to save on the number of calls you have to make.
+            Useful when you have already exported into excel and you want to change the number of years the sheet contains.
+            """
+    )
+
     args = parser.parse_args()    
-    main(DATA_PATH, args.symbol, args.years)
+    main(DATA_PATH, args.symbol, args.years, args.no_fetch)
