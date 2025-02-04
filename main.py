@@ -90,14 +90,14 @@ def get_info(ticker_symbol):
             }
 
 
-def process_statement(data_path):
+def process_statement(data_path, years):
     with open(data_path, 'r') as file:
         data = json.load(file)
     quarterly = data["quarterlyReports"]
 
 
     periods = []
-    num_of_periods = YEARS * 4
+    num_of_periods = years * 4
     for i in range(num_of_periods):
         periods.append(quarterly[i]["fiscalDateEnding"])
 
@@ -127,7 +127,7 @@ def process_statement(data_path):
     return df
 
 
-def export(data_path, symbol):
+def export(data_path, symbol, years):
     # Retrieve company information
     company_info = get_info(symbol)
 
@@ -142,9 +142,9 @@ def export(data_path, symbol):
     cover_df = pd.DataFrame(cover_data)
 
     # Process other statements
-    balance_sheet = process_statement(f'{data_path}/{symbol}_{sheets[0]}.json')
-    income_statement = process_statement(f'{data_path}/{symbol}_{sheets[1]}.json')
-    cash_flow = process_statement(f'{data_path}/{symbol}_{sheets[2]}.json')
+    balance_sheet = process_statement(f'{data_path}/{symbol}_{sheets[0]}.json', years)
+    income_statement = process_statement(f'{data_path}/{symbol}_{sheets[1]}.json', years)
+    cash_flow = process_statement(f'{data_path}/{symbol}_{sheets[2]}.json', years)
 
     with pd.ExcelWriter(f'output/{symbol}_statements.xlsx', engine='openpyxl') as writer:
         
@@ -201,20 +201,45 @@ def validate_ticker(symbol):
     else:
         raise argparse.ArgumentTypeError(f"Ticker '{symbol}' not found in Yahoo Finance.")
 
-    
 
-def main(data_path, symbol):
-    print(f"Retrieving statements for {symbol}.")
+def validate_years(value):
+    try:
+        value = int(value)  # Convert input to integer
+        if 1 <= value <= 15:
+            return value
+        else:
+            raise argparse.ArgumentTypeError("Invalid value: Must be an integer between 1 and 15.")
+    except ValueError:
+        raise argparse.ArgumentTypeError("Invalid value: Must be an integer (1 - 15).")
+
+
+
+def main(data_path, symbol, years):
+    print(f"Retrieving statements for {symbol} for the last {years} year(s).")
     gs = get_statements(symbol)
     if gs != 0:
         return
-    export(data_path, symbol)
+
+    export(data_path, symbol, years)
     print(f"Excel file saved! Location: output/{symbol}_statements.xlsx")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Export Financial Statements for a given Company")
-    parser.add_argument('symbol', type=validate_ticker, help="The company's ticker (e.g. AAPL, MSFT)")
+    
+    parser.add_argument(
+        'symbol',
+        type=validate_ticker,
+        help="The company's ticker (e.g. AAPL, MSFT)"
+        )
+    
+    parser.add_argument(
+        'years',
+        nargs='?',
+        default=5,
+        type=validate_years,
+        help="Optional argument, the number of years to export statements for (1 - 15). Default value is 5."
+    )
 
     args = parser.parse_args()    
-    main(DATA_PATH, args.symbol)
+    main(DATA_PATH, args.symbol, args.years)
