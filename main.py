@@ -200,6 +200,9 @@ def export(data_path, symbol, years):
                     if col_num != 1:  # Skip the first column
                         column_letter = openpyxl.utils.get_column_letter(col_num)
                         sheet.column_dimensions[column_letter].width = 13
+                    else:
+                        column_letter = openpyxl.utils.get_column_letter(col_num)
+                        sheet.column_dimensions[column_letter].width = 35
 
 
 def validate_ticker(symbol):
