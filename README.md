@@ -23,8 +23,8 @@ To download this project to your local machine, follow these steps:
 
 ### Option 1: Download the ZIP File
 1. Go to the [Releases](<https://github.com/ptorpis/val_model/releases>).
-3. Select **Download ZIP**.
-4. Extract the ZIP file to your desired location.
+2. Select the latest release and download the ZIP file.
+3. Extract the ZIP file to your desired location.
 
 Then, navigate into the project directory:
 
