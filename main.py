@@ -10,7 +10,6 @@ import argparse
 
 CONFIG_PATH = 'config/config.json'
 DATA_PATH = 'data'
-YEARS = 5
 
 sheets = [
     'BALANCE_SHEET',
@@ -159,6 +158,7 @@ def export(data_path, symbol, years):
     income_statement = process_statement(f'{data_path}/{symbol}_{sheets[1]}.json', years)
     cash_flow = process_statement(f'{data_path}/{symbol}_{sheets[2]}.json', years)
 
+    os.makedirs('output', exist_ok=True)
     with pd.ExcelWriter(f'output/{symbol}_statements.xlsx', engine='openpyxl') as writer:
         
         # Write the cover sheet first
