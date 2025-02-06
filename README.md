@@ -5,6 +5,8 @@ This script fetches and exports financial statements (Balance Sheet, Income Stat
 
 Please make sure to verify the validity and the accuracy of the data provided.
 
+To use this script, you must obtain an API key from [Alpha Vantage](https://www.alphavantage.co/support/#api-key).
+
 ## Features
 - Fetches financial statements from Alpha Vantage API.
 - Retrieves company information (Name, Sector, Industry, Website) from Yahoo Finance.
@@ -25,8 +27,13 @@ Then, navigate into the project directory:
 ```bash
 cd your/repository_folder
 ```
-
-## Environment Setup (recommended, not strictly necessary)
+## Quick Setup
+To set up the program on you machine after downloading it, run:
+```
+python setup.py
+```
+This will set up your environment, download all the packages needed and promt you for your API key (if you don't have it at that moment, you can set it up later see also: [Configuration](##configuration))
+## Manual Setup
 ### On Windows:
 ```
 python -m venv .venv
@@ -48,14 +55,14 @@ source venv/bin/activate
 ```
 deactivate
 ```
-## Dependencies
+## Dependencies (manual setup only)
 Ensure you have Python installed and install the required dependencies using the provided `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
 ```
 ## Configuration
-To use this script, you must obtain an API key from [Alpha Vantage](https://www.alphavantage.co/support/#api-key). Once you have the key, create a configuration file `config/config.json` and paste your API key inside:
+Once you have the key, go to the file `config/config.json` and paste your API key inside:
 ```json
 {
     "api_key": "INSERT YOUR KEY HERE"
