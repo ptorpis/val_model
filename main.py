@@ -122,7 +122,7 @@ def process_statement(data_path, years):
         title_case_keys.append(current.title()) 
 
     statement = {}
-    statement["Keys"] = title_case_keys[2:] # exclude fiscalDateEnding and reportedCurrency to match the length of the other lists below
+    statement["Fiscal Date Ending"] = title_case_keys[2:] # exclude fiscalDateEnding and reportedCurrency to match the length of the other lists below
     for period in range(len(periods)):
         values = []
         for key in range(2, len(keys_list)): # from 2 to only get the numbers
@@ -133,9 +133,8 @@ def process_statement(data_path, years):
         statement[quarterly[period][keys_list[0]]] = values
 
     df = pd.DataFrame(statement)
-    df = df.set_index("Keys")
+    df = df.set_index("Fiscal Date Ending")
     df = df.iloc[:, ::-1]
-
     return df
 
 
