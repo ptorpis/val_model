@@ -27,23 +27,24 @@ cd your/repository_folder
 ```
 
 ## Environment Setup (recommended, not strictly necessary)
-On Windows:
+### On Windows:
 ```
 python -m venv .venv
 ```
-
+To set up the environment (only needs to be done once), then whenever you want to use the program, run:
 ```
 .venv\Scripts\activate
 ```
-On macOS/Linux:
+### On macOS/Linux:
 ```
 python3 -m venv .venv
 ```
+To set up the environment (only needs to be done once), then whenever you want to use the program, run:
 ```
 source venv/bin/activate
 ```
 
-When you are done using the program:
+### When you are done using the program:
 ```
 deactivate
 ```
