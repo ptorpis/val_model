@@ -1,7 +1,7 @@
 # Financial Statements Exporter
 
 ## Overview
-This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting over the last 5 years. This is a refactored verion of my [financial_analysis](<https://github.com/ptorpis/financial_analysis>) project.
+This script fetches and exports financial statements (Balance Sheet, Income Statement, and Cash Flow) for a given stock symbol. It retrieves data from Alpha Vantage and Yahoo Finance, processes it into structured Pandas DataFrames, and exports the results as a formatted Excel file. The exported statements are based on quarterly reporting. The date range can be anything from 1-15 years back. This is a refactored verion of my [financial_analysis](<https://github.com/ptorpis/financial_analysis>) project.
 
 Please make sure to verify the validity and the accuracy of the data provided.
 
@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ## Download and Installation
 To download this project to your local machine, follow these steps:
 
-### Option 1: Download the ZIP File
+### Download the ZIP File
 1. Go to the [Releases](<https://github.com/ptorpis/val_model/releases>).
 2. Select the latest release and download the ZIP file.
 3. Extract the ZIP file to your desired location.
@@ -62,7 +62,7 @@ This will export the quarterly statements for the last 10 years.
   ```
 This will export the quarterly statements for the last 7 years, and skip the API calls. (A free user has a maximum of 25 per day)
 
-- **If you need help, use -h or --help**:
+- **If you need help, use `-h` or `--help`**:
   ```bash
   python main.py --help
   ```
