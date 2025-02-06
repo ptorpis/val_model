@@ -12,12 +12,6 @@ Please make sure to verify the validity and the accuracy of the data provided.
 - Exports data into a well-formatted Excel file with multiple sheets.
 - Validates stock ticker symbols before fetching data.
 
-## Prerequisites
-Ensure you have Python installed and install the required dependencies using the provided `requirements.txt` file:
-
-```bash
-pip install -r requirements.txt
-```
 ## Download and Installation
 To download this project to your local machine, follow these steps:
 
@@ -32,14 +26,41 @@ Then, navigate into the project directory:
 cd your/repository_folder
 ```
 
+## Environment Setup (recommended, not strictly necessary)
+On Windows:
+```
+python -m venv .venv
+```
+
+```
+.venv\Scripts\activate
+```
+On macOS/Linux:
+```
+python3 -m venv .venv
+```
+```
+source venv/bin/activate
+```
+
+When you are done using the program:
+```
+deactivate
+```
+## Dependencies
+Ensure you have Python installed and install the required dependencies using the provided `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
 ## Configuration
 To use this script, you must obtain an API key from [Alpha Vantage](https://www.alphavantage.co/support/#api-key). Once you have the key, create a configuration file `config/config.json` and paste your API key inside:
-
 ```json
 {
     "api_key": "INSERT YOUR KEY HERE"
 }
 ```
+Do not share your key with others.
 
 ## Usage
 Run the script with a stock ticker symbol:
