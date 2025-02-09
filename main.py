@@ -51,7 +51,7 @@ def get_statements(symbol, no_fetch):
         return
 
     if api_key == 'INSERT YOUR KEY HERE':
-        print("Please provide an API key. (config/config.json)")
+        print("Execution terminated. Please provide an API key. (config/config.json)")
         return
 
     for sheet in sheets:
@@ -230,7 +230,7 @@ def validate_years(value):
 
 
 def main(data_path, symbol, years, no_fetch):
-    print(f"Retrieving statements for {symbol} for the last {years} year(s).")
+    print(f"Retrieving statements for {symbol} for the last {years} year(s)...")
     gs = get_statements(symbol, no_fetch)
     if gs != 0:
         return
