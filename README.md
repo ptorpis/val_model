@@ -32,7 +32,8 @@ To set up the program on you machine after downloading it, run:
 ```
 python setup.py
 ```
-This will set up your environment, download all the packages needed and promt you for your API key (if you don't have it at that moment, you can set it up later see also: [Configuration](##Configuration))
+This will download all the packages needed and promt you for your API key (if you don't have it at that moment, you can set it up later see also: [Configuration](##Configuration))
+If you run into dependency issues, use the manual setup to create a virtual environment.
 ## Manual Setup
 ### On Windows:
 ```
