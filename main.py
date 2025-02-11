@@ -107,6 +107,112 @@ def process_statement(data_path, years):
         data = json.load(file)
     quarterly = data["quarterlyReports"]
 
+    income_statement_order = [
+        "Total Revenue",
+        "Cost Of Revenue",
+        "Costof Goods And Services Sold",
+        "Gross Profit",
+        "Operating Expenses",
+        "Selling General And Administrative",
+        "Research And Development",
+        "Depreciation And Amortization",
+        "Operating Income",
+        "Investment Income Net",
+        "Net Interest Income",
+        "Interest Income",
+        "Interest Expense",
+        "Non Interest Income",
+        "Other Non Operating Income",
+        "Income Before Tax",
+        "Income Tax Expense",
+        "Net Income From Continuing Operations",
+        "Interest And Debt Expense",
+        "Net Income",
+        "Comprehensive Income Net Of Tax",
+        "Ebit",
+        "Ebitda"
+    ]
+
+    balance_sheet_order= [
+        # Assets
+        "Total Assets",
+        "Total Current Assets",
+        "Cash And Cash Equivalents At Carrying Value",
+        "Cash And Short Term Investments",
+        "Short Term Investments",
+        "Current Net Receivables",
+        "Inventory",
+        "Other Current Assets",
+        "Total Non Current Assets",
+        "Property Plant Equipment",
+        "Accumulated Depreciation Amortization PPE",
+        "Intangible Assets",
+        "Intangible Assets Excluding Goodwill",
+        "Goodwill",
+        "Investments",
+        "Long Term Investments",
+        "Other Non Current Assets",
+        
+        # Liabilities
+        "Total Liabilities",
+        "Total Current Liabilities",
+        "Current Accounts Payable",
+        "Deferred Revenue",
+        "Current Debt",
+        "Short Term Debt",
+        "Other Current Liabilities",
+        "Total Non Current Liabilities",
+        "Long Term Debt",
+        "Current Long Term Debt",
+        "Long Term Debt Noncurrent",
+        "Short Long Term Debt Total",
+        "Capital Lease Obligations",
+        "Other Non Current Liabilities",
+        
+        # Shareholder Equity
+        "Total Shareholder Equity",
+        "Common Stock",
+        "Common Stock Shares Outstanding",
+        "Retained Earnings",
+        "Treasury Stock"
+    ]
+
+    cash_flow_statement_order = [
+        # Operating Activities
+        "Net Income",
+        "Operating Cashflow",
+        "Depreciation Depletion And Amortization",
+        "Change In Operating Assets",
+        "Change In Operating Liabilities",
+        "Change In Receivables",
+        "Change In Inventory",
+        "Payments For Operating Activities",
+        "Proceeds From Operating Activities",
+        
+        # Investing Activities
+        "Cashflow From Investment",
+        "Capital Expenditures",
+        
+        # Financing Activities
+        "Cashflow From Financing",
+        "Proceeds From Repayments Of Short Term Debt",
+        "Payments For Repurchase Of Common Stock",
+        "Payments For Repurchase Of Equity",
+        "Payments For Repurchase Of Preferred Stock",
+        "Dividend Payout",
+        "Dividend Payout Common Stock",
+        "Dividend Payout Preferred Stock",
+        "Proceeds From Issuance Of Common Stock",
+        "Proceeds From Issuance Of Preferred Stock",
+        "Proceeds From Issuance Of Long Term Debt And Capital Securities Net",
+        "Proceeds From Repurchase Of Equity",
+        "Proceeds From Sale Of Treasury Stock",
+        
+        # Final Cash Position
+        "Change In Cash And Cash Equivalents",
+        "Change In Exchange Rate",
+        "Profit Loss"
+    ]
 
     periods = []
     num_of_periods = years * 4
@@ -135,6 +241,16 @@ def process_statement(data_path, years):
     df = pd.DataFrame(statement)
     df = df.set_index("Fiscal Date Ending")
     df = df.iloc[:, ::-1]
+
+    if "Total Revenue" in df.index:
+        # If income statement data is present, reorder rows accordingly
+        df = df.reindex(income_statement_order, fill_value=0)
+    elif "Total Assets" in df.index:
+        # If balance sheet data is present, reorder rows accordingly
+        df = df.reindex(balance_sheet_order, fill_value=0)
+    elif "Operating Cashflow" in df.index:
+        # If cash flow data is present, reorder rows accordingly
+        df = df.reindex(cash_flow_statement_order, fill_value=0)
     return df
 
 
